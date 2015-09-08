@@ -1,0 +1,45 @@
+body {
+    font-family: arial, helvetica, sans-serif;
+    font-size: 14px;
+    color: black;
+    background-color: #ffc;
+    margin: 20px;
+    padding: 0;
+}
+
+header {
+    background-color: white;
+    border-style: solid;
+    text-align: center;
+}
+
+img{
+    width: 60%;
+    height: 25%;
+}
+
+#welcome{
+    background-color: white;
+    border-style: solid;
+    font-family: arial;
+    font-size: 50px
+}
+
+#navbar{
+    background-color: white;
+    border-style: solid;
+    font-family: arial;
+    font-size: 25px;
+    text-align: center;
+}
+
+#draftList{
+    background-color: white;
+    border-style: solid;
+    font-size: 15px;
+    font-family: arial;
+}
+
+#footer{
+    clear: both;
+}
