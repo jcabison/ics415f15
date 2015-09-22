@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src = "jquery-1.11.3.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+</head>
+<body>
+<div id = "div3"><h1>W5C1</h1></div>
+
+<div id = "div1">Click This</div>
+
+<div id = "div2"><p>Hover over this</p></div>
+
+
+<script>
+    $(document).ready(function(){
+        $("#div1").click(function(){
+            //document.getElementById("div1").style.color = "red";
+            $(this).attr("style", "color: red");
+            
+            //alert("The paragraph DIV was clicked.");
+        });
+    });
+
+    $(document).ready(function(){
+        $("p").mouseover(function(){
+            $("p").css("background-color", "yellow");
+        });
+    });
+
+    $(document).ready(function(){
+        $("h1").mouseleave(function(){
+            $("h1").css("background-color", "lightgray");
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
