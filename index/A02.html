@@ -1,0 +1,278 @@
+<!-------------------
+Jun Cabison
+ICS 312
+Assignment 02
+September 20, 2015
+--------------------->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Base Converter</title>
+    <style>
+        td.button {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 2px;
+            text-align:center; width:65px;
+        }
+    </style>
+    <script>
+        function decimalToBinary(decimal)
+        {
+            var bin = '';	// accumulator
+            var remainder;
+            while (decimal>0)
+            {
+                remainder = decimal % 2;
+                bin = remainder + bin;	//	append new binary digit at front of accumulator
+                decimal = parseInt(decimal/2);
+            }
+            return bin; // string
+        }
+
+        function binaryToDecimal(binary)
+        {
+            // binary digits processed left to right
+            var decimal = 0;	// accumulator
+            for(var i = 0; i < binary.length; i++) {
+                decimal = decimal * 2 + parseInt(binary.substr(i,1));
+            }
+            return decimal; // value
+        }
+
+        function clearDisplay()
+        {
+            document.getElementById('number_input').value = '';
+        }
+
+        function appendDigit(d)
+        {
+            var display = document.getElementById("number_input").value;
+            var base;
+            if(document.getElementById("binary_radio").checked) { base = 'binary'; }
+            else if (document.getElementById("decimal_radio").checked = true) {base = 'decimal'; }
+            else {
+                document.getElementById("decimal_radio").checked = true;
+                base = 'decimal';
+            }
+
+            switch(base) {
+                case 'decimal':
+                    if(d >= '0' && d <= '9') display += '' + d;
+                    break;
+                case 'binary':
+                    if(d == '0' || d == '1') display += '' + d;
+                    break;
+                case 'hex':
+                    if (d >= '0' && d <= '9' || d >= 'A' && d <= 'F' || d >= 'a' && d <= 'f') display += '' + d
+                    break;
+            }
+            document.getElementById("number_input").value = display;
+            document.getElementById("base_display").innerHTML = base;
+        }
+
+        function baseConvert(toBase)
+        {
+            var argument = document.getElementById("number_input").value;
+            var fromBase = document.getElementById("base_display").innerHTML;
+            var result;
+            if(argument.length > 0 && fromBase>'')
+            {
+                if(fromBase == 'binary' && toBase == 'decimal')
+                {
+                    result = binaryToDecimal(argument);
+                }
+                else
+                if(fromBase == 'decimal' && toBase == 'binary')
+                {
+                    result = decimalToBinary(argument);
+                }
+
+                if(fromBase == 'hex' && toBase == 'decimal') {
+                    result = hexToDecimal(argument);
+                }
+                else
+                if (fromBase == 'decimal' && toBase == 'hex') {
+                    result = convertToHex(argument);
+                }
+
+                if(fromBase == 'binary' && toBase == 'hex') {
+                    result = convertToHex(binaryToDecimal(argument));
+                }
+                else if (fromBase == 'hex' && toBase == 'binary') {
+                    result = decimalToBinary(hexToDecimal(argument));
+                }
+            }
+            document.getElementById("number_input").value = result;
+            document.getElementById("base_display").innerHTML = toBase;
+        }
+        /**
+         * Following functions were taken and used as examples to finish up the remaining
+         * functions to figure out the hex functions and conversions in between.
+         function convertToHex(){
+            var decimal = document.getElementById('decimal_input').value;
+            var hex = ' ';
+            var remainder;
+            var loop = 0;
+            var hex_digits = "0123456789ABCDE";
+            while(decimal > 0 && loop < 500){
+                loop +=1;
+                remainder = decimal % 16;
+                decimal = parseInt(decimal/16);
+                hex = hex_digits.substr(remainder, 1) + hex;
+            }
+            document.getElementById('result').innerHTHML = hex;
+         }
+         function binStrToInt32(s){
+            var num = 0;
+            for(var i = 0; i < s.length; i++){
+                num = num * 2 + parseInt(s.substr(i, 1));
+            }
+            return num;
+        }
+         function convertToBinary(){
+            console.log("Convert to Binary");
+            var decimal = document.getElementById('decimal_input').value;
+            var bin = '';
+            var remainder;
+            var loop = 0;
+            while(decimal > 0 && loop < 500){
+                loop += 1;
+                remainder = decimal % 2;
+                decimal = parseInt(decimal/2);
+                bin = remainder + bin;
+            }
+            document.getElementById('result').innerHTML = bin;
+        }
+         */
+        function hexToDecimal(hex) {
+            var decimal = 0;
+            var digit;
+            for(var i = 0; i < hex.length; i++) {
+                digit = hex.substr(i, 1);
+                if(digit >= '0' && digit <= '9') {
+                    decimal = decimal * 16 + parseInt(digit);
+                }
+                if(digit >= 'A' && digit <= 'F') {
+                    decimal = decimal * 16 + digit.charCodeAt(0) - "A".charCodeAt(0) + 10;
+                }
+            }
+            return decimal;
+        }
+
+        function convertToHex(decimal) {
+            var hex = ' ';
+            var remainder;
+            var loop = 0;
+            var hex_digits = "0123456789ABCDE";
+            while(decimal > 0 && loop < 500){
+                loop +=1;
+                remainder = decimal % 16;
+                decimal = parseInt(decimal/16);
+                hex = hex_digits.substr(remainder, 1) + hex;
+            }
+            return hex;
+        }
+    </script>
+</head>
+<body style="font-family: arial, helvetica; margin: 10px;">
+<center>
+
+    <h1>Jun's Base Converter</h1>
+
+    <table>
+        <tr>
+            <td class="button">
+                <input type="radio" value="binary" id="binary_radio" name="base" onclick="baseConvert(this.value)"><BR>Binary
+            </td>
+            <td class="button">
+                <input type="radio" value="decimal" id="decimal_radio" name="base" onclick="baseConvert(this.value)"><BR>Decimal
+            </td>
+            <td class="button">
+                <input type="radio" value="hex" id="hex_radio" name="base" onclick="baseConvert(this.value)"><BR>Hex
+            </td>
+        </tr>
+    </table>
+
+    <table style="font-size: 10pt; color: #0000CC;">
+        <tr>
+            <td>&nbsp;<span id="base_display"></span>&nbsp;</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td><input type="text" id="number_input" style="width:150px;text-align:right;font-size:14pt;"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <!----- HEX VALUES ------>
+            <td>
+                <input type="button" value="C" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="D" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="E" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="F" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <!----- HEX VALUES ------>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="8" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="9" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <!----- HEX VALUES ------>
+            <td>
+                <input type="button" value="A" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="B" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <!----- HEX VALUES ------>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="4" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="5" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="6" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="7" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="0" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="1" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="2" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+            <td>
+                <input type="button" value="3" style="width:50px; height:50px;" onclick="appendDigit(this.value)">
+            </td>
+        </tr>
+        <tr>
+            <td colspan=4 style="text-align:center;">
+                <input type="button" value="Clear" style="width:150px; height:50px; background-color: #E3E1B8;" onclick="clearDisplay()">
+            </td>
+        </tr>
+    </table>
+    <BR><BR>
