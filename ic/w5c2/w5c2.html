@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W5C2 jQuery AJAX</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                $("#div1").load("demo_test.txt #p1");
+            });
+        });
+
+        $(document).ready(function(){
+            $("button").click(function(){
+                $.get("demo_test.txt", function(data, status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+            });
+        });
+
+        $("button").click(function(){
+            $.post("demo_test.asp",
+                    {
+                        name: "User",
+                        city: "Honolulu"
+                    },
+                    function(data, status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                    });
+        });
+    </script>
+
+
+</head>
+<body>
+
+<div id="div1" style = "border: solid">
+    <h2>W5C2 aJax jQuery Example</h2>
+    <button>Submit</button>
+</div>
+
+<br>
+
+<div id = div2" style = "border: solid">
+    <h3>Playing with get()</h3>
+    <button>Sample</button>
+</div>
+
+<br>
+
+<div id = "div3" style = "border: solid">
+    <h4>Playing with post() to a server</h4>
+    <button>Sample</button>
+</div>
+
+
+
+
+</body>
+</html>
